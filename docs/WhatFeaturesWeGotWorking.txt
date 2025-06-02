@@ -1,0 +1,19 @@
+We were able to get all features working with the exception of highlighting the selection of
+cards. This is because our model handled the logic of selecting cards within our controller, and
+then would tell our view what card was selected at any given time by passing it an index for which
+card was selected. On the other hand, our provider handled that logic in their view, and only
+involved the controller by telling it what card is selected. For this reason, the logic of a
+card selection from our provider would look like the following:
+1. a card is selected
+2. the provider view highlights the selected card
+3. the provider view calls the features callback and tells it that a card is selected
+4. our controller recognizes that a card is selected and refreshes the view with the selected card
+    index
+5. because their view is not able to take in a selected card index upon refreshing, this refreshes
+    the view and unselects the card.
+
+To solve this problem, we would either have to change our controller to not refresh the view after
+selection, breaking our current view, or change the provider's view to take in a selected card.
+
+NOTE: the cards are still selected, and the game can still be played, they just aren't highlighted.
+Also, we had to delete our mocks from this submission to get our files under 125.

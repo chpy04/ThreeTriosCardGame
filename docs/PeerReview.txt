@@ -1,0 +1,42 @@
+Design Critique
+Overall, the design of this codebase was solid. The only major issue that we noticed was the
+lack of interfaces for the model and controller classes, which we had to request from the provider.
+However, once these interfaces were included, the design made a lot more sense and was adaptable.
+In terms of design critiques, one thing that we noticed in this codebase was some overlap between
+the ReadonlyTrioGame interface and the IGrid interface. Both had methods to get a cell from a
+specific coordinate on the board. If the IGrid represents a grid of cells, than it alone should
+be responsible for dealing with coordinates and cells, and the ReadonlyTrioGame should delegate to
+that class accordingly, instead of also implementing that functionality. Another thing we noticed
+was that cells keep track of what player owns them, but cards do not. This felt very awkward as
+cards are always owned by a player, but cells are not. It was not clear what a cell would do in the
+event that it did not have a card. Finally, we found it odd that cells knew the location that they
+were in, and felt that it would have been better to keep track of this information in the grid, as
+cells do not behave differently in different locations.
+
+Implementation Critique
+In terms of the implementation, we felt that the implementation was organized well and easy to
+follow. No methods were doing too much, and it was relatively easy to read nd understand. One
+critique we did have involved the coupling between the model and view. Firstly, we noticed that
+the controller implemented the ModelState interface which was a part of the model package. This
+meant that part of the functionality relied on by the view was dependent on this interface in the
+model. It looks as if this interface could have just been moved into the controller package, but we
+can't be sure of this without seeing the code. Additionally, we noticed that both the view and the
+controller kept track of which card was being selected. This felt odd as the same information was
+being held in multiple places, and the view was doing a lot of logical checking about whether or
+not a card could be selected that we felt would have been the controller's job.
+
+Documentation Critique
+In general, the documentation for the interfaces in this codebase was excellent. We found it very
+easy to understand what different methods were doing and what interfaces represented. A couple
+very minor critiques we had was there was some smaller details left out in places. For example,
+it was not clarified if certain indecies were 0 or 1 indexed, and in the cell interface it was
+unclear what getOwner would return if the cell did not have a card.
+
+Limitations and Suggestions
+Overall, we found that most of the limitations in this codebase came from adding additional
+behaviors to classes that did not need them. For example, ReadonlyTrioGame keeping track of cell
+positions, cells keeping track of owners, cards keeping track of positions, or views keeping track
+of legality of card selections. We think that reformatting so that these bits of information
+are contained to their relevant classes could help keep some of the classes like cards and the view
+more lightweight. This would also make many of the classes more flexible as they would be able to
+be used in different contexts.

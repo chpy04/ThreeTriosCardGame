@@ -1,0 +1,20 @@
+What we could have done differently:
+The first improvement we could have made was creating an ICard interface that would extend
+our Slot interface as opposed to just using the Slot interface for our Card types. Using the slot
+interface left our design open to some nonsensical states such as holes/empty's in players hands.
+This was something requested by the people we provided our code to, and is also something that
+our provider's implemented that we directly saw the benefits of. Another thing that we liked
+about our provider's code was their use of a coordinate class as opposed to just two ints. This
+made it easier to tell which values were representing a cards position on the grid vs in a
+player's hand.
+
+What was your experience like with your providers?
+Our experience was relatively smooth. Our enum's and cards were used in very similar ways which
+made them very easy to adapt. The first bump that we ran into came when adapting the board/grid,
+because we did not have a grid. We ended up deciding to make our board implement both the
+ReadOnlyTrioGame and the IGrid, as our Board covered all of that functionality, but this led to
+some weird workarounds. The only other issue we ran into when adapting the code was the
+fact that our provider passed a card to their setCell method whereas we used in index. Because
+of this, we had to search through the player's hand to find the card, and pass the index that it
+is at to our model. Finally, we were unable to adapt the functionality of highlighting selected
+cards, which is explained in WhatFeaturesWeGotWorking.txt.
